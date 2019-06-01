@@ -1,37 +1,28 @@
-// Copyright 2017 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
 
-import 'dart:async';
-import 'dart:convert' show json;
-
-import "package:http/http.dart" as http;
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'dart:convert';
+import 'dart:async';
 import 'package:flutter/services.dart';
+import 'dart:convert' show json;
+import 'package:http/http.dart' as http;
 
-GoogleSignIn _googleSignIn = GoogleSignIn(
-  scopes: <String>[
-    'email',
-    'https://www.googleapis.com/auth/contacts.readonly',
-  ],
-);
+class SignInGoogleAuth extends StatefulWidget {
 
-void main() {
-  runApp(
-    MaterialApp(
-      title: 'Lunch Roulette Singin',
-      home: SignInDemo(),
-    ),
-  );
-}
+  final _googleSignIn;
 
-class SignInDemo extends StatefulWidget {
+SignInGoogleAuth(this._googleSignIn);
+
   @override
-  State createState() => SignInDemoState();
+  State createState() => SignInGoogleAuthState(this._googleSignIn);
 }
 
-class SignInDemoState extends State<SignInDemo> {
+class SignInGoogleAuthState extends State<SignInGoogleAuth> {
+
+  final _googleSignIn;
+
+  SignInGoogleAuthState(this._googleSignIn);
+
   GoogleSignInAccount _currentUser;
   String _contactText;
 
@@ -46,24 +37,31 @@ class SignInDemoState extends State<SignInDemo> {
         _handleGetContact();
       }
     });
+    //_googleSignIn.signInSilently();
     _setUpGoogleSignIn();
+
   }
 
-  void _setUpGoogleSignIn() async {
+
+void _setUpGoogleSignIn() async {
   try {
-    //final account = await _googleSignIn.signInSilently(suppressErrors: false).catchError((dynamic e){ print('$e'); });
-    final account = await _googleSignIn.signIn();
+    //final account = await _googleSignIn.signInSilently();
+    final account = _googleSignIn.signInSilently(suppressErrors: false).catchError((dynamic e){ 
+      print('$e'); 
+      
+      });
     print("Successfully signed in as ${account.displayName}.");
   } on PlatformException catch (e) {
     // User not signed in yet. Do something appropriate.
     print("The user is not signed in yet. Asking to sign in.");
-    //_googleSignIn.signIn();
+    _handleSignIn();
   }
 }
 
+
   Future<void> _handleGetContact() async {
     setState(() {
-      _contactText = "Loading contact info to Lunch Roulette";
+      _contactText = "Loading contact info...";
     });
     final http.Response response = await http.get(
       'https://people.googleapis.com/v1/people/me/connections'
@@ -161,7 +159,7 @@ class SignInDemoState extends State<SignInDemo> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Lunch Roulette'),
+          title: const Text('Google Sign In'),
         ),
         body: ConstrainedBox(
           constraints: const BoxConstraints.expand(),
