@@ -6,17 +6,17 @@ class LunchRoulleteApp extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     
-    return LunchRoulleteState();
+    return LunchRouletteState();
   }
 }
 
-class LunchRoulleteState extends State<LunchRoulleteApp> {
+class LunchRouletteState extends State<LunchRoulleteApp> {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
       home: new Scaffold(
         appBar: new AppBar(
-          title: new Text("hello collegue"),
+          title: new Text("Lunch Roulette"),
           actions: <Widget>[],
         ),
       ),
