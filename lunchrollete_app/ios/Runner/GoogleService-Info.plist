@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>211797185679-qc0a5k5iec2o3fahcacuq83g3ijsasll.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.211797185679-qc0a5k5iec2o3fahcacuq83g3ijsasll</string>
+	<key>API_KEY</key>
+	<string>AIzaSyC2wYOPcFN5FzszsDG1B4q6qjwpx9_kPG8</string>
+	<key>GCM_SENDER_ID</key>
+	<string>211797185679</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.jeroenreza.lunchroulette</string>
+	<key>PROJECT_ID</key>
+	<string>lunchroulleteapp</string>
+	<key>STORAGE_BUCKET</key>
+	<string>lunchroulleteapp.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:211797185679:ios:47afb086721f4e04</string>
+	<key>DATABASE_URL</key>
+	<string>https://lunchroulleteapp.firebaseio.com</string>
+	<!-- Google Sign-in Section -->
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<!-- TODO Replace this value: -->
+				<!-- Copied from GoogleService-Info.plist key REVERSED_CLIENT_ID -->
+				<string>com.googleusercontent.apps.211797185679-qc0a5k5iec2o3fahcacuq83g3ijsasll</string>
+			</array>
+		</dict>
+	</array>
+<!-- End of the Google Sign-in Section -->
+</dict>
+</plist>
