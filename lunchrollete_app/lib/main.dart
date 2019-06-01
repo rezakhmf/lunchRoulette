@@ -4,7 +4,7 @@
 
 import 'dart:async';
 import 'dart:convert' show json;
-
+import 'dart:math';
 import "package:http/http.dart" as http;
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -157,17 +157,15 @@ class SignInDemoState extends State<SignInDemo> {
               : new ListView.builder(
                   itemCount: this != null ? _staffs.length : 0,
                   itemBuilder: (context, i) {
-                    final staff = _staffs[i];
+                    var rng = new Random();
+                    final staff = _staffs[rng.nextInt(_staffs.length)];
                     return new FlatButton(
                       child: new StaffCell(staff),
                       padding: new EdgeInsets.all(0.0),
                       onPressed: () {
                         Navigator.push(
                             context,
-                            new MaterialPageRoute(
-                                // builder: (context) =>
-                                //     new CourseDetailsPage(video)
-                                    ));
+                            new MaterialPageRoute());
                       },
                     );
                   },
@@ -197,7 +195,7 @@ class SignInDemoState extends State<SignInDemo> {
         // ),
         body: ConstrainedBox(
           constraints: const BoxConstraints.expand(),
-          child: !_isLoading ?  _buildBody() : new CircularProgressIndicator(),
+          child: _buildBody(),
         ));
   }
 }
