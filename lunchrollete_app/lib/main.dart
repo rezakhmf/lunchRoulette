@@ -9,6 +9,18 @@ import "package:http/http.dart" as http;
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter/services.dart';
+import 'package:lunchrollete_app/model/Staff.dart';
+import './viewModel/staff_cell.dart';
+
+var _isLoading = true;
+
+var _staffs = [
+  new Staff(1, "Reza", "Farahani", "https://secure.meetupstatic.com/photos/member/5/4/e/9/highres_286521737.jpeg", 3),
+  new Staff(1, "Jeroen", "Tietema", "https://secure.meetupstatic.com/photos/member/7/0/7/8/highres_45628792.jpeg", 2),
+  new Staff(1, "Zara", "Dominguez", "https://secure.meetupstatic.com/photos/member/4/d/8/6/highres_254239846.jpeg", 4),
+  new Staff(1, "Quirijn", "Groot Bluemink", "https://secure.meetupstatic.com/photos/member/7/4/e/2/highres_84869922.jpeg", 3),
+  new Staff(1, "Brett", "Morgan", "https://secure.meetupstatic.com/photos/member/3/f/9/0/highres_11116272.jpeg", 5)
+  ];
 
 GoogleSignIn _googleSignIn = GoogleSignIn(
   scopes: <String>[
@@ -121,28 +133,48 @@ class SignInDemoState extends State<SignInDemo> {
 
   Widget _buildBody() {
     if (_currentUser != null) {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: <Widget>[
-          ListTile(
-            leading: GoogleUserCircleAvatar(
-              identity: _currentUser,
-            ),
-            title: Text(_currentUser.displayName ?? ''),
-            subtitle: Text(_currentUser.email ?? ''),
-          ),
-          const Text("Signed in successfully."),
-          Text(_contactText ?? ''),
-          RaisedButton(
-            child: const Text('SIGN OUT'),
-            onPressed: _handleSignOut,
-          ),
-          RaisedButton(
-            child: const Text('REFRESH'),
-            onPressed: _handleGetContact,
-          ),
-        ],
-      );
+    _isLoading = false;
+      return new MaterialApp(
+      home: new Scaffold(
+        appBar: new AppBar(
+          title: new Text("Lunch Roulette"),
+          actions: <Widget>[
+            new IconButton(
+              icon: new Icon(Icons.refresh),
+              onPressed: () {
+                print("reloading...");
+                setState(() {
+                  _isLoading = false;
+                });
+                //_fetchData();
+              },
+            )
+          ],
+        ),
+        body: new Center(
+          child: _isLoading
+              ? new CircularProgressIndicator()
+              : new ListView.builder(
+                  itemCount: this != null ? _staffs.length : 0,
+                  itemBuilder: (context, i) {
+                    final staff = _staffs[i];
+                    return new FlatButton(
+                      child: new StaffCell(staff),
+                      padding: new EdgeInsets.all(0.0),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            new MaterialPageRoute(
+                                // builder: (context) =>
+                                //     new CourseDetailsPage(video)
+                                    ));
+                      },
+                    );
+                  },
+                ),
+        ),
+      ),
+    );
     } else {
       return Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -160,12 +192,12 @@ class SignInDemoState extends State<SignInDemo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Lunch Roulette'),
-        ),
+        // appBar: AppBar(
+        //   title: const Text('Lunch Roulette'),
+        // ),
         body: ConstrainedBox(
           constraints: const BoxConstraints.expand(),
-          child: _buildBody(),
+          child: !_isLoading ?  _buildBody() : new CircularProgressIndicator(),
         ));
   }
 }
